@@ -1,0 +1,195 @@
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">📝 My Todo Dashboard</h1>
+        <p class="text-muted">
+            Stay productive. Organize your daily tasks.
+        </p>
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2>12</h2>
+                    <p class="text-muted mb-0">Total Tasks</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-success">7</h2>
+                    <p class="text-muted mb-0">Completed</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-danger">5</h2>
+                    <p class="text-muted mb-0">Pending</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow border-0 mb-4">
+
+        <div class="card-body">
+
+            <form class="row g-3">
+
+                <div class="col-md-5">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter task">
+                </div>
+
+                <div class="col-md-3">
+                    <select class="form-select">
+                        <option>Low Priority</option>
+                        <option>Medium Priority</option>
+                        <option>High Priority</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <input
+                        type="date"
+                        class="form-control">
+                </div>
+
+                <div class="col-md-2 d-grid">
+                    <button class="btn btn-primary">
+                        Add Task
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-white">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h4 class="mb-0">Your Tasks</h4>
+                </div>
+
+                <div class="col-md-6">
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Search tasks...">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+                        <th>Task</th>
+                        <th>Priority</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>Learn Django Authentication</td>
+
+                        <td>
+                            <span class="badge bg-danger">
+                                High
+                            </span>
+                        </td>
+
+                        <td>08 Aug 2026</td>
+
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-success btn-sm">
+                                Complete
+                            </button>
+
+                            <button class="btn btn-warning btn-sm">
+                                Edit
+                            </button>
+
+                            <button class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Push Project to GitHub</td>
+
+                        <td>
+                            <span class="badge bg-primary">
+                                Medium
+                            </span>
+                        </td>
+
+                        <td>10 Aug 2026</td>
+
+                        <td>
+                            <span class="badge bg-success">
+                                Completed
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-warning btn-sm">
+                                Edit
+                            </button>
+
+                            <button class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
