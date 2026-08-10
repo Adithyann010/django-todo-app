@@ -1,7 +1,132 @@
-<h2>Add Task</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Add Task</button>
-</form>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-task-card {
+            width: 100%;
+            max-width: 480px;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .add-task-header {
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: #fff;
+            padding: 28px 32px;
+        }
+
+        .add-task-header h2 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .add-task-header p {
+            margin: 4px 0 0;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+
+        .add-task-body {
+            padding: 32px;
+        }
+
+        /* style Django's default form.as_p output */
+        .add-task-body p {
+            margin-bottom: 18px;
+        }
+
+        .add-task-body label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+            color: #333;
+        }
+
+        .add-task-body input,
+        .add-task-body select,
+        .add-task-body textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #dcdfe6;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .add-task-body input:focus,
+        .add-task-body select:focus,
+        .add-task-body textarea:focus {
+            outline: none;
+            border-color: #4e73df;
+            box-shadow: 0 0 0 3px rgba(78,115,223,0.15);
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(34,74,190,0.35);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 18px;
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #4e73df;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="add-task-card">
+        <div class="add-task-header">
+            <h2>➕ Add Task</h2>
+            <p>Create a new item for your to-do list</p>
+        </div>
+
+        <div class="add-task-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-add">Add Task</button>
+            </form>
+
+            <a href="{% url 'body' %}" class="back-link">← Back to dashboard</a>
+        </div>
+    </div>
+
+</body>
+</html>

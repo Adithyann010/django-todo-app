@@ -61,8 +61,13 @@ def add_task(request):
     return render(request,"add_task.html",{'form':form})         
 def body_fun(request):
     tasks = Todo.objects.filter(user=request.user)
-    return render(request, "body.html", {"tasks": tasks})
-
+    completed_count = tasks.filter(completed=True).count()
+    pending_count = tasks.filter(completed=False).count()
+    return render(request, "body.html", {
+        "tasks": tasks,
+        "completed_count": completed_count,
+        "pending_count": pending_count,
+    })
 def complete_task(request, task_id):
     task = get_object_or_404(Todo, id=task_id, user=request.user)
     task.completed = True

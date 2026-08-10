@@ -163,13 +163,13 @@
 
                 <div class="card-body text-center">
 
-                    <h2 class="text-success">
-                        0
-                    </h2>
+                   <h2 class="text-success">
+    {{ completed_count }}
+</h2>
 
-                    <p class="text-muted mb-0">
-                        Completed
-                    </p>
+<p class="text-muted mb-0">
+    Completed
+</p>
 
                 </div>
 
@@ -185,12 +185,12 @@
                 <div class="card-body text-center">
 
                     <h2 class="text-danger">
-                        {{ tasks|length }}
-                    </h2>
+    {{ pending_count }}
+</h2>
 
-                    <p class="text-muted mb-0">
-                        Pending
-                    </p>
+<p class="text-muted mb-0">
+    Pending
+</p>
 
                 </div>
 
@@ -217,7 +217,8 @@
 
         <div class="card-body">
 
-            <form method="POST">
+            <form method="POST" action="{% url 'add_task' %}">
+
 
                 {% csrf_token %}
 
@@ -275,7 +276,7 @@
                         </label>
 
                         <input
-                            type="date"
+                            type="datetime-local"
                             name="due_date"
                             class="form-control">
 
@@ -378,26 +379,25 @@
                             <!-- Priority -->
 
                             <td>
+{% if task.priority == "HIGH" %}
 
-                                {% if task.priority == "High" %}
+    <span class="priority-high">
+        {{ task.get_priority_display }}
+    </span>
 
-                                    <span class="priority-high">
-                                        High
-                                    </span>
+{% elif task.priority == "MED" %}
 
-                                {% elif task.priority == "Medium" %}
+    <span class="priority-medium">
+        {{ task.get_priority_display }}
+    </span>
 
-                                    <span class="priority-medium">
-                                        Medium
-                                    </span>
+{% else %}
 
-                                {% else %}
+    <span class="priority-low">
+        {{ task.get_priority_display }}
+    </span>
 
-                                    <span class="priority-low">
-                                        Low
-                                    </span>
-
-                                {% endif %}
+{% endif %}
 
                             </td>
 
