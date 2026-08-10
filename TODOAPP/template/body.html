@@ -1,74 +1,293 @@
-<div class="container py-5">
+```html
+{% load static %}
 
-    <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold">📝 My Todo Dashboard</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Todo App</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <style>
+
+        body {
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .dashboard {
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-weight: 700;
+        }
+
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .task-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .task-completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .priority-high {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .priority-medium {
+            color: #fd7e14;
+            font-weight: bold;
+        }
+
+        .priority-low {
+            color: #198754;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg bg-white">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold text-primary" href="#">
+            📝 My Todo
+        </a>
+
+        <div class="ms-auto">
+
+            <span class="me-3">
+                Welcome, {{ request.user.username }}
+            </span>
+
+            <a href="{% url 'login' %}"
+               class="btn btn-outline-danger btn-sm">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<div class="container dashboard">
+
+
+    <!-- Welcome -->
+
+    <div class="welcome">
+
+        <h1>
+            My Todo Dashboard
+        </h1>
+
         <p class="text-muted">
-            Stay productive. Organize your daily tasks.
+            Manage your tasks and stay productive.
         </p>
-    </div>
-
-    <div class="row mb-4">
-
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2>12</h2>
-                    <p class="text-muted mb-0">Total Tasks</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-success">7</h2>
-                    <p class="text-muted mb-0">Completed</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-danger">5</h2>
-                    <p class="text-muted mb-0">Pending</p>
-                </div>
-            </div>
-        </div>
 
     </div>
 
-    <div class="card shadow border-0 mb-4">
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <div class="row g-4 mb-4">
+
+
+        <div class="col-md-4">
+
+            <div class="card stat-card">
+
+                <div class="card-body text-center">
+
+                    <h2 class="text-primary">
+                        {{ tasks|length }}
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Total Tasks
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card stat-card">
+
+                <div class="card-body text-center">
+
+                    <h2 class="text-success">
+                        0
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Completed
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="card stat-card">
+
+                <div class="card-body text-center">
+
+                    <h2 class="text-danger">
+                        {{ tasks|length }}
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Pending
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= ADD TASK ================= -->
+
+    <div class="card task-card mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <h5 class="mb-0">
+                ➕ Add New Task
+            </h5>
+
+        </div>
+
 
         <div class="card-body">
 
-            <form class="row g-3">
+            <form method="POST">
 
-                <div class="col-md-5">
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Enter task">
-                </div>
+                {% csrf_token %}
 
-                <div class="col-md-3">
-                    <select class="form-select">
-                        <option>Low Priority</option>
-                        <option>Medium Priority</option>
-                        <option>High Priority</option>
-                    </select>
-                </div>
 
-                <div class="col-md-2">
-                    <input
-                        type="date"
-                        class="form-control">
-                </div>
+                <div class="row g-3">
 
-                <div class="col-md-2 d-grid">
-                    <button class="btn btn-primary">
-                        Add Task
-                    </button>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Task
+                        </label>
+
+                        <input
+                            type="text"
+                            name="task"
+                            class="form-control"
+                            placeholder="Enter your task"
+                            required>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+                            Priority
+                        </label>
+
+                        <select
+                            name="priority"
+                            class="form-select">
+
+                            <option value="LOW">
+                                Low
+                            </option>
+
+                            <option value="MED">
+                                Medium
+                            </option>
+
+                            <option value="HIGH">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+                            Due Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="due_date"
+                            class="form-control">
+
+                    </div>
+
+
+                    <div class="col-12">
+
+                       <button type="submit" class="btn btn-primary">Add Task</button>
+
+                    </div>
+
                 </div>
 
             </form>
@@ -77,119 +296,248 @@
 
     </div>
 
-    <div class="card shadow border-0">
+
+
+    <!-- ================= TASK LIST ================= -->
+
+    <div class="card task-card">
 
         <div class="card-header bg-white">
 
-            <div class="row">
+            <h5 class="mb-0">
+                📋 My Tasks
+            </h5>
 
-                <div class="col-md-6">
-                    <h4 class="mb-0">Your Tasks</h4>
-                </div>
+        </div>
 
-                <div class="col-md-6">
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Search tasks...">
-                </div>
+
+        <div class="card-body p-0">
+
+
+            <div class="table-responsive">
+
+                <table class="table table-hover mb-0">
+
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>
+                                Task
+                            </th>
+
+                            <th>
+                                Priority
+                            </th>
+
+                            <th>
+                                Due Date
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for task in tasks %}
+
+                        <tr>
+
+
+                            <!-- Task -->
+
+                            <td>
+
+                                {% if task.completed %}
+
+                                    <span class="task-completed">
+                                        {{ task.task }}
+                                    </span>
+
+                                {% else %}
+
+                                    {{ task.task }}
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Priority -->
+
+                            <td>
+
+                                {% if task.priority == "High" %}
+
+                                    <span class="priority-high">
+                                        High
+                                    </span>
+
+                                {% elif task.priority == "Medium" %}
+
+                                    <span class="priority-medium">
+                                        Medium
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="priority-low">
+                                        Low
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Date -->
+
+                            <td>
+
+                                {{ task.due_date }}
+
+                            </td>
+
+
+                            <!-- Status -->
+
+                            <td>
+
+                                {% if task.completed %}
+
+                                    <span class="badge bg-success">
+                                        Completed
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-warning text-dark">
+                                        Pending
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Actions -->
+
+                            <td>
+
+
+                                <!-- Complete -->
+
+                                {% if not task.completed %}
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'complete_task' task.id %}"
+                                    class="d-inline">
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        class="btn btn-success btn-sm">
+
+                                        ✓ Complete
+
+                                    </button>
+
+                                </form>
+
+                                {% endif %}
+
+
+
+                                <!-- Edit -->
+
+                                <a
+                                    href="{% url 'edit_task' task.id %}"
+                                    class="btn btn-warning btn-sm">
+
+                                    ✏ Edit
+
+                                </a>
+
+
+
+                                <!-- Delete -->
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'delete_task' task.id %}"
+                                    class="d-inline">
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        class="btn btn-danger btn-sm">
+
+                                        🗑 Delete
+
+                                    </button>
+
+                                </form>
+
+
+                            </td>
+
+
+                        </tr>
+
+
+                        {% empty %}
+
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="text-center py-5">
+
+                                <h5 class="text-muted">
+                                    No tasks yet
+                                </h5>
+
+                                <p class="text-muted">
+                                    Add your first task above.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
 
             </div>
 
         </div>
 
-        <div class="card-body">
-
-            <table class="table table-hover align-middle">
-
-                <thead>
-
-                    <tr>
-                        <th>Task</th>
-                        <th>Priority</th>
-                        <th>Due Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>Learn Django Authentication</td>
-
-                        <td>
-                            <span class="badge bg-danger">
-                                High
-                            </span>
-                        </td>
-
-                        <td>08 Aug 2026</td>
-
-                        <td>
-                            <span class="badge bg-warning text-dark">
-                                Pending
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button class="btn btn-success btn-sm">
-                                Complete
-                            </button>
-
-                            <button class="btn btn-warning btn-sm">
-                                Edit
-                            </button>
-
-                            <button class="btn btn-danger btn-sm">
-                                Delete
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Push Project to GitHub</td>
-
-                        <td>
-                            <span class="badge bg-primary">
-                                Medium
-                            </span>
-                        </td>
-
-                        <td>10 Aug 2026</td>
-
-                        <td>
-                            <span class="badge bg-success">
-                                Completed
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button class="btn btn-warning btn-sm">
-                                Edit
-                            </button>
-
-                            <button class="btn btn-danger btn-sm">
-                                Delete
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
     </div>
 
+
 </div>
+
+
+</body>
+
+</html>
+```

@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+from .forms import TaskForm
+from .models import Todo
 
 # Create your views here.
 def home_fun(request):
@@ -33,19 +35,39 @@ def login_fun(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        print(username)
-        print(password)
+        
     
         user = authenticate(request,
                             username=username,
                             password=password)
-        print(user)
+        
     
         if user is not None:
             login(request,user)
-            return redirect("index")
+            return redirect("body")
     return render(request,"login.html")
 
+def add_task(request):
+    if request.method == "POST":
+        form=TaskForm(request.POST)
+        if form.is_valid():
+            todo = form.save(commit=False)
+            todo.user = request.user
+            todo.save()
+            return redirect("body")
+    else:
+        form=TaskForm()
+    return render(request,"add_task.html",{'form':form})         
 def body_fun(request):
     return render(request,"body.html")
+def body1(request):
+    print("Logged in user:", request.user)
+    print("Is authenticated:", request.user.is_authenticated)
+
+    tasks = Todo.objects.filter(user=request.user)
+
+    print("Tasks:", tasks)
+    print("Count:", tasks.count())
+
+    return render(request, "body.html", {"tasks": tasks})
 
