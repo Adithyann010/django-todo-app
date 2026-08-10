@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .forms import TaskForm
 from .models import Todo
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def home_fun(request):
@@ -59,15 +60,29 @@ def add_task(request):
         form=TaskForm()
     return render(request,"add_task.html",{'form':form})         
 def body_fun(request):
-    return render(request,"body.html")
-def body1(request):
-    print("Logged in user:", request.user)
-    print("Is authenticated:", request.user.is_authenticated)
-
     tasks = Todo.objects.filter(user=request.user)
-
-    print("Tasks:", tasks)
-    print("Count:", tasks.count())
-
     return render(request, "body.html", {"tasks": tasks})
 
+def complete_task(request, task_id):
+    task = get_object_or_404(Todo, id=task_id, user=request.user)
+    task.completed = True
+    task.save()
+    return redirect("body")
+
+
+def delete_task(request, task_id):
+    task = get_object_or_404(Todo, id=task_id, user=request.user)
+    task.delete()
+    return redirect("body")
+
+
+def edit_task(request, task_id):
+    task = get_object_or_404(Todo, id=task_id, user=request.user)
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect("body")
+    else:
+        form = TaskForm(instance=task)
+    return render(request, "add_task.html", {"form": form})

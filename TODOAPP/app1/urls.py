@@ -7,6 +7,8 @@ urlpatterns = [
     path('Register/',views.register_fun,name="register"),
     path('login/',views.login_fun,name="login"),
     path('body/',views.body_fun,name="body"),
-    path('body1/',views.body1,name="body1"),
-    path('add/',views.add_task,name="add_task")
+    path('add/',views.add_task,name="add_task"),
+    path('complete/<int:task_id>/', views.complete_task, name="complete_task"),
+    path('edit/<int:task_id>/', views.edit_task, name="edit_task"),
+    path('delete/<int:task_id>/', views.delete_task, name="delete_task"),
 ]
