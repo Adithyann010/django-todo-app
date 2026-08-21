@@ -10,6 +10,6 @@ class Todo(models.Model):
         ('HIGH','high')
         ]
     priority=models.CharField(max_length=4,choices=PRIORITY_CHOICES,default="LOW")
-    due_date=models.DateTimeField()
+    due_date=models.DateField()
     completed = models.BooleanField(default=False)
 # Create your models here.

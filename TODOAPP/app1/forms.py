@@ -10,9 +10,8 @@ class TaskForm(forms.ModelForm):
             'due_date',
         ]
         widgets = {
-            'due_date': forms.DateTimeInput(
-                attrs={'type': 'datetime-local'}
-            ),
-        }
+    'due_date': forms.DateInput(attrs={'type': 'date'})
+}
+
         
     
